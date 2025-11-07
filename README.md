@@ -102,26 +102,6 @@ npm start
 
 The frontend will run on `http://localhost:3000`
 
-## API Endpoints
-
-### Authentication
-- `POST /api/auth/signup` - Create a new user account
-- `POST /api/auth/login` - Login with email and password
-
-### Nutrition
-- `POST /api/nutrition/log` - Log a meal
-- `GET /api/nutrition/today` - Get today's meals and total calories
-- `GET /api/nutrition/all` - Get all meals
-
-### Fitness
-- `POST /api/fitness/log` - Log a workout
-- `GET /api/fitness/week` - Get this week's workouts
-- `GET /api/fitness/all` - Get all workouts
-
-### Profile
-- `GET /api/profile` - Get user profile
-- `PUT /api/profile` - Update user profile
-
 ## Pages
 
 1. **Landing Page** (`/`) - Introduction and login/signup buttons
