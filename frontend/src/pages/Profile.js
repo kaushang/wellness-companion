@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { profileAPI } from '../utils/api';
-import ConfirmModal from '../components/ConfirmModal';
-import Select from '../components/Select';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { profileAPI } from "../utils/api";
+import ConfirmModal from "../components/ConfirmModal";
+import Select from "../components/Select";
 
 const Profile = () => {
   const navigate = useNavigate();
   const { logout, user: contextUser } = useAuth();
   const [showLogout, setShowLogout] = useState(false);
   const [formData, setFormData] = useState({
-    age: '',
-    currentBodyWeight: '',
-    height: '',
-    fitnessFrequencyPerWeek: ''
+    age: "",
+    currentBodyWeight: "",
+    height: "",
+    fitnessFrequencyPerWeek: "",
   });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-  const [heightType, setHeightType] = useState('cm'); // 'cm' | 'ftin'
-  const [heightFeet, setHeightFeet] = useState('');
-  const [heightInches, setHeightInches] = useState('');
-  const [weightUnit, setWeightUnit] = useState('kg'); // 'kg' | 'lb'
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [heightType, setHeightType] = useState("cm"); // 'cm' | 'ftin'
+  const [heightFeet, setHeightFeet] = useState("");
+  const [heightInches, setHeightInches] = useState("");
+  const [weightUnit, setWeightUnit] = useState("kg"); // 'kg' | 'lb'
 
   useEffect(() => {
     fetchProfile();
@@ -32,34 +32,34 @@ const Profile = () => {
       const response = await profileAPI.getProfile();
       const user = response.data.user;
       setFormData({
-        age: user.age || '',
-        currentBodyWeight: user.currentBodyWeight || '',
-        height: user.height || '',
-        fitnessFrequencyPerWeek: user.fitnessFrequencyPerWeek || ''
+        age: user.age || "",
+        currentBodyWeight: user.currentBodyWeight || "",
+        height: user.height || "",
+        fitnessFrequencyPerWeek: user.fitnessFrequencyPerWeek || "",
       });
       if (user.height) {
         const totalInches = Number(user.height) / 2.54;
         const feet = Math.floor(totalInches / 12);
         const inches = Math.round(totalInches - feet * 12);
-        setHeightFeet(feet ? String(feet) : '');
-        setHeightInches(inches ? String(inches) : '');
+        setHeightFeet(feet ? String(feet) : "");
+        setHeightInches(inches ? String(inches) : "");
       }
     } catch (err) {
-      console.error('Error fetching profile:', err);
+      console.error("Error fetching profile:", err);
       // If profile fetch fails, try to use context user
       if (contextUser) {
         setFormData({
-          age: contextUser.age || '',
-          currentBodyWeight: contextUser.currentBodyWeight || '',
-          height: contextUser.height || '',
-          fitnessFrequencyPerWeek: contextUser.fitnessFrequencyPerWeek || ''
+          age: contextUser.age || "",
+          currentBodyWeight: contextUser.currentBodyWeight || "",
+          height: contextUser.height || "",
+          fitnessFrequencyPerWeek: contextUser.fitnessFrequencyPerWeek || "",
         });
         if (contextUser.height) {
           const totalInches = Number(contextUser.height) / 2.54;
           const feet = Math.floor(totalInches / 12);
           const inches = Math.round(totalInches - feet * 12);
-          setHeightFeet(feet ? String(feet) : '');
-          setHeightInches(inches ? String(inches) : '');
+          setHeightFeet(feet ? String(feet) : "");
+          setHeightInches(inches ? String(inches) : "");
         }
       }
     }
@@ -68,19 +68,19 @@ const Profile = () => {
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setSuccess('');
+    setError("");
+    setSuccess("");
     setLoading(true);
 
     try {
       let heightCm = 0;
-      if (heightType === 'cm') {
+      if (heightType === "cm") {
         heightCm = Number(formData.height) || 0;
       } else {
         const ft = Number(heightFeet) || 0;
@@ -90,7 +90,7 @@ const Profile = () => {
       }
 
       let weightKg = 0;
-      if (weightUnit === 'kg') {
+      if (weightUnit === "kg") {
         weightKg = Number(formData.currentBodyWeight) || 0;
       } else {
         weightKg = (Number(formData.currentBodyWeight) || 0) * 0.45359237;
@@ -100,23 +100,26 @@ const Profile = () => {
         age: Number(formData.age),
         currentBodyWeight: Number(weightKg.toFixed(2)),
         height: Number(heightCm.toFixed(1)),
-        fitnessFrequencyPerWeek: formData.fitnessFrequencyPerWeek
+        fitnessFrequencyPerWeek: formData.fitnessFrequencyPerWeek,
       };
 
       const response = await profileAPI.updateProfile(updateData);
-      setSuccess('Profile updated successfully!');
+      setSuccess("Profile updated successfully!");
       // Update form data with response
       if (response.data.user) {
         const u = response.data.user;
         setFormData({
-          age: u.age || '',
-          currentBodyWeight: u.currentBodyWeight || '',
-          height: u.height || '',
-          fitnessFrequencyPerWeek: u.fitnessFrequencyPerWeek || ''
+          age: u.age || "",
+          currentBodyWeight: u.currentBodyWeight || "",
+          height: u.height || "",
+          fitnessFrequencyPerWeek: u.fitnessFrequencyPerWeek || "",
         });
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to update profile. Please try again.');
+      setError(
+        err.response?.data?.message ||
+          "Failed to update profile. Please try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -129,13 +132,15 @@ const Profile = () => {
         <div className="mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <button
-              onClick={() => navigate('/home')}
+              onClick={() => navigate("/home")}
               className="bg-indigo-600 text-white px-4 py-2 rounded-lg transition duration-200"
             >
               ← Back
             </button>
           </div>
-            <h1 className="text-2xl font-bold text-gray-800">Profile & Settings</h1>
+          <h1 className="text-2xl font-bold text-gray-800">
+            Profile & Settings
+          </h1>
           <button
             onClick={() => setShowLogout(true)}
             className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition duration-200"
@@ -153,22 +158,37 @@ const Profile = () => {
           cancelText="Cancel"
           confirmText="Log out"
           onCancel={() => setShowLogout(false)}
-          onConfirm={() => { setShowLogout(false); logout(); }}
+          onConfirm={() => {
+            setShowLogout(false);
+            logout();
+          }}
         />
         {/* Profile Info */}
         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Account Information</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">
+            Account Information
+          </h2>
           <div className="space-y-2">
-            <p><span className="font-semibold">Name:</span> {contextUser?.fullName}</p>
-            <p><span className="font-semibold">Email:</span> {contextUser?.email}</p>
-            <p><span className="font-semibold">Gender:</span> {contextUser?.gender}</p>
+            <p>
+              <span className="font-semibold">Name:</span>{" "}
+              {contextUser?.fullName}
+            </p>
+            <p>
+              <span className="font-semibold">Email:</span> {contextUser?.email}
+            </p>
+            <p>
+              <span className="font-semibold">Gender:</span>{" "}
+              {contextUser?.gender}
+            </p>
           </div>
         </div>
 
         {/* Edit Profile Form */}
         <div className="bg-white rounded-lg shadow-lg p-6">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Update Profile</h2>
-          
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">
+            Update Profile
+          </h2>
+
           {error && (
             <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
               {error}
@@ -183,9 +203,11 @@ const Profile = () => {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-gray-700 font-semibold mb-2">Age</label>
+              <label className="block text-gray-700 font-semibold mb-2">
+                Age
+              </label>
               <input
-                type="text"
+                type="number"
                 inputMode="numeric"
                 pattern="[0-9]*"
                 name="age"
@@ -196,90 +218,158 @@ const Profile = () => {
               />
             </div>
 
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-gray-700 font-semibold mb-2">Current Body Weight ({weightUnit})</label>
-                <input
-                  type="text"
-                  inputMode="decimal"
-                  pattern="[0-9.]*"
-                  name="currentBodyWeight"
-                  value={formData.currentBodyWeight}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                />
-              </div>
-              <div>
-                <Select
-                  label="Weight Unit"
-                  name="weightUnit"
-                  value={weightUnit}
-                  onChange={(e) => setWeightUnit(e.target.value)}
-                  placeholder="Select unit"
-                  required
-                >
-                  <option value="kg">Kilograms (kg)</option>
-                  <option value="lb">Pounds (lb)</option>
-                </Select>
-              </div>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-4">
-              {heightType === 'cm' ? (
-                <div>
-                  <label className="block text-gray-700 font-semibold mb-2">Height (cm)</label>
+                <label className="block text-gray-700 font-semibold mb-2">
+                  Current Body Weight
+                </label>
+                <div className="relative w-full">
                   <input
                     type="text"
                     inputMode="decimal"
                     pattern="[0-9.]*"
-                    name="height"
-                    value={formData.height}
+                    name="currentBodyWeight"
+                    value={formData.currentBodyWeight}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-4 py-2 pr-32 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   />
-                </div>
-              ) : (
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-gray-700 font-semibold mb-2">Feet</label>
-                    <input
-                      type="text"
-                      inputMode="numeric"
-                      pattern="[0-9]*"
-                      value={heightFeet}
-                      onChange={(e) => setHeightFeet(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                      placeholder="e.g., 5"
-                    />
+                  <div className="absolute inset-y-0 right-0 flex items-center">
+                    <select
+                      name="weightUnit"
+                      value={weightUnit}
+                      onChange={(e) => setWeightUnit(e.target.value)}
+                      required
+                      className="h-full py-0 pl-2 pr-8 border-l border-gray-300 bg-transparent text-gray-700 focus:outline-none focus:ring-0 appearance-none"
+                    >
+                      <option value="" disabled>
+                        Select unit
+                      </option>
+                      <option value="kg">Kilograms</option>
+                      <option value="lb">Pounds</option>
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </div>
                   </div>
-                  <div>
-                    <label className="block text-gray-700 font-semibold mb-2">Inches</label>
-                    <input
-                      type="text"
-                      inputMode="numeric"
-                      pattern="[0-9]*"
-                      value={heightInches}
-                      onChange={(e) => setHeightInches(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                      placeholder="e.g., 8"
-                    />
-                  </div>
                 </div>
-              )}
+              </div>
+
               <div>
-                <Select 
-                  label="Height Input Type"
-                  name="heightType"
-                  value={heightType}
-                  onChange={(e) => setHeightType(e.target.value)}
-                  placeholder="Choose input format"
-                  required
-                >
-                  <option value="cm">Centimeters (cm)</option>
-                  <option value="ftin">Feet + Inches</option>
-                </Select>
+                <label className="block text-gray-700 font-semibold mb-2">
+                  Height
+                </label>
+                {heightType === "cm" ? (
+                  <div className="relative w-full">
+                    <input
+                      type="text"
+                      inputMode="decimal"
+                      pattern="[0-9.]*"
+                      name="height"
+                      value={formData.height}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-2 pr-44 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    />
+                    <div className="absolute inset-y-0 right-0 flex items-center" style={{ width: "150px" }}>
+                      <select
+                        name="heightType"
+                        value={heightType}
+                        onChange={(e) => setHeightType(e.target.value)}
+                        required
+                        className="h-full py-0 pl-2 pr-8 border-l border-gray-300 bg-transparent text-gray-700 focus:outline-none focus:ring-0 appearance-none"
+                      >
+                        <option value="" disabled>
+                          Select unit
+                        </option>
+                        <option value="cm">Centimeters</option>
+                        <option value="ftin">Feet & Inches</option>
+                      </select>
+                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-4 w-4"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex w-full border border-gray-300 rounded-lg has-[input:focus]:ring-2 has-[input:focus]:ring-indigo-500 has-[input:focus]:border-indigo-300">
+                    <div className="flex flex-1">
+                      <div className="flex-1">
+                        <input
+                          type="number"
+                          inputMode="numeric"
+                          pattern="[0-9]*"
+                          value={heightFeet}
+                          onChange={(e) => setHeightFeet(e.target.value)}
+                          className="w-full px-4 py-2 border-0 rounded-l-lg focus:outline-none bg-transparent"
+                          placeholder="Feet"
+                        />
+                      </div>
+                      <div className="flex-1 border-l border-gray-300">
+                        <input
+                          type="number"
+                          inputMode="numeric"
+                          pattern="[0-9]*"
+                          value={heightInches}
+                          onChange={(e) => setHeightInches(e.target.value)}
+                          className="w-full px-4 py-2 border-0 focus:outline-none bg-transparent"
+                          placeholder="Inches"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="relative border-l border-gray-300" style={{ width: "150px" }}>
+                      <select
+                        name="heightType"
+                        value={heightType}
+                        onChange={(e) => setHeightType(e.target.value)}
+                        required
+                        className="w-full h-full appearance-none py-2 pr-8 pl-2 border-0 rounded-r-lg focus:outline-none bg-white text-gray-700"
+                      >
+                        <option value="" disabled>
+                          Select unit
+                        </option>
+                        <option value="cm">Centimeters</option>
+                        <option value="ftin">Feet & Inches</option>
+                      </select>
+                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-4 w-4"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -304,7 +394,7 @@ const Profile = () => {
               disabled={loading}
               className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-200 disabled:opacity-50"
             >
-              {loading ? 'Updating...' : 'Update Profile'}
+              {loading ? "Updating..." : "Update Profile"}
             </button>
           </form>
         </div>
@@ -314,4 +404,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
