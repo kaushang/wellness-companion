@@ -65,6 +65,56 @@ const Profile = () => {
     }
   };
 
+  // Weight conversion function
+  const handleWeightUnitChange = (newUnit) => {
+    const currentWeight = Number(formData.currentBodyWeight);
+    if (currentWeight && weightUnit !== newUnit) {
+      let convertedWeight;
+      if (newUnit === "lb") {
+        // Convert kg to lb
+        convertedWeight = (currentWeight * 2.20462).toFixed(2);
+      } else {
+        // Convert lb to kg
+        convertedWeight = (currentWeight * 0.453592).toFixed(2);
+      }
+      setFormData({
+        ...formData,
+        currentBodyWeight: convertedWeight,
+      });
+    }
+    setWeightUnit(newUnit);
+  };
+
+  // Height conversion function
+  const handleHeightTypeChange = (newType) => {
+    if (heightType !== newType) {
+      if (newType === "ftin") {
+        // Convert cm to feet and inches
+        const heightCm = Number(formData.height);
+        if (heightCm) {
+          const totalInches = heightCm / 2.54;
+          const feet = Math.floor(totalInches / 12);
+          const inches = Math.round(totalInches - feet * 12);
+          setHeightFeet(String(feet));
+          setHeightInches(String(inches));
+        }
+      } else {
+        // Convert feet and inches to cm
+        const feet = Number(heightFeet) || 0;
+        const inches = Number(heightInches) || 0;
+        if (feet || inches) {
+          const totalInches = feet * 12 + inches;
+          const heightCm = (totalInches * 2.54).toFixed(1);
+          setFormData({
+            ...formData,
+            height: heightCm,
+          });
+        }
+      }
+    }
+    setHeightType(newType);
+  };
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -154,7 +204,7 @@ const Profile = () => {
         <ConfirmModal
           isOpen={showLogout}
           title="Confirm log out"
-          message="You’re about to log out. Continue?"
+          message="You're about to log out. Continue?"
           cancelText="Cancel"
           confirmText="Log out"
           onCancel={() => setShowLogout(false)}
@@ -238,7 +288,7 @@ const Profile = () => {
                     <select
                       name="weightUnit"
                       value={weightUnit}
-                      onChange={(e) => setWeightUnit(e.target.value)}
+                      onChange={(e) => handleWeightUnitChange(e.target.value)}
                       required
                       className="h-full py-0 pl-2 pr-8 border-l border-gray-300 bg-transparent text-gray-700 focus:outline-none focus:ring-0 appearance-none"
                     >
@@ -286,7 +336,7 @@ const Profile = () => {
                       <select
                         name="heightType"
                         value={heightType}
-                        onChange={(e) => setHeightType(e.target.value)}
+                        onChange={(e) => handleHeightTypeChange(e.target.value)}
                         required
                         className="h-full py-0 pl-2 pr-8 border-l border-gray-300 bg-transparent text-gray-700 focus:outline-none focus:ring-0 appearance-none"
                       >
@@ -313,7 +363,7 @@ const Profile = () => {
                     </div>
                   </div>
                 ) : (
-                  <div className="flex w-full border border-gray-300 rounded-lg has-[input:focus]:ring-2 has-[input:focus]:ring-indigo-500 has-[input:focus]:border-indigo-300">
+                  <div className="flex w-full border border-gray-300 rounded-lg has-[input:focus]:ring-2 has-[input:focus]:ring-indigo-500 has-[input:focus]:border-indigo-500">
                     <div className="flex flex-1">
                       <div className="flex-1">
                         <input
@@ -343,7 +393,7 @@ const Profile = () => {
                       <select
                         name="heightType"
                         value={heightType}
-                        onChange={(e) => setHeightType(e.target.value)}
+                        onChange={(e) => handleHeightTypeChange(e.target.value)}
                         required
                         className="w-full h-full appearance-none py-2 pr-8 pl-2 border-0 rounded-r-lg focus:outline-none bg-white text-gray-700"
                       >
