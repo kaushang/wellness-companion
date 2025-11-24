@@ -60,7 +60,7 @@ const Nutrition = () => {
       const byDay = {};
       allMeals.forEach(m => {
         const d = new Date(m.timestamp);
-        if (d >= new Date(sevenDaysAgo.setHours(0,0,0,0))) {
+        if (d >= new Date(sevenDaysAgo.setHours(0, 0, 0, 0))) {
           const key = new Date(d.getFullYear(), d.getMonth(), d.getDate()).toISOString();
           if (!byDay[key]) {
             byDay[key] = { date: new Date(d.getFullYear(), d.getMonth(), d.getDate()), calories: 0, protein: 0, carbohydrates: 0, fats: 0 };
@@ -80,7 +80,7 @@ const Nutrition = () => {
 
   const generateSuggestion = () => {
     const avgDailyCalories = 2000; // Average daily caloric needs
-    const proteinFoods = meals.filter(meal => 
+    const proteinFoods = meals.filter(meal =>
       meal.foodItemName.toLowerCase().includes('chicken') ||
       meal.foodItemName.toLowerCase().includes('fish') ||
       meal.foodItemName.toLowerCase().includes('egg') ||
@@ -134,10 +134,10 @@ const Nutrition = () => {
           fats: formData.fats ? Number(formData.fats) : 0
         });
       }
-      
-      setFormData({ 
-        foodItemName: '', 
-        calories: '', 
+
+      setFormData({
+        foodItemName: '',
+        calories: '',
         quantity: '',
         protein: '',
         carbohydrates: '',
@@ -167,9 +167,9 @@ const Nutrition = () => {
 
   const handleCancelEdit = () => {
     setEditingMeal(null);
-    setFormData({ 
-      foodItemName: '', 
-      calories: '', 
+    setFormData({
+      foodItemName: '',
+      calories: '',
       quantity: '',
       protein: '',
       carbohydrates: '',
@@ -220,16 +220,17 @@ const Nutrition = () => {
         <div className="mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <button
-              onClick={() => navigate('/home')}
-              className="bg-indigo-600 text-white px-4 py-2 rounded-lg transition duration-200"
+              onClick={() => navigate("/home")}
+              className="text-indigo-600 hover:text-indigo-800 font-semibold transition-colors flex items-center gap-2"
             >
-              ← Back
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+              Back to Home
             </button>
           </div>
-            <h1 className="text-2xl font-bold text-gray-800">Nutrition</h1>
+          <h1 className="text-2xl font-bold text-gray-800">Nutrition</h1>
           <button
             onClick={() => setShowLogout(true)}
-            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition duration-200"
+            className="bg-white text-red-500 border border-red-200 hover:bg-red-50 px-4 py-2 rounded-xl transition duration-200 font-medium shadow-sm"
           >
             Logout
           </button>
@@ -278,123 +279,123 @@ const Nutrition = () => {
         <div className="grid md:grid-cols-2 gap-6">
           {/* Log Meal Form */}
           <div className="bg-white rounded-lg shadow-lg p-6 mb-6 md:mb-0">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">
-            {editingMeal ? 'Edit Meal' : 'Log a Meal'}
-          </h2>
-          
-          {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-              {error}
-            </div>
-          )}
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+              {editingMeal ? 'Edit Meal' : 'Log a Meal'}
+            </h2>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-gray-700 font-semibold mb-2">Food Item Name</label>
-              <input
-                type="text"
-                name="foodItemName"
-                value={formData.foodItemName}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                placeholder="e.g., Grilled Chicken Breast"
-              />
-            </div>
+            {error && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                {error}
+              </div>
+            )}
 
-            <div className="grid md:grid-cols-2 gap-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-gray-700 font-semibold mb-2">Approx Calories</label>
+                <label className="block text-gray-700 font-semibold mb-2">Food Item Name</label>
                 <input
-                  type="number"
-                  name="calories"
-                  value={formData.calories}
+                  type="text"
+                  name="foodItemName"
+                  value={formData.foodItemName}
                   onChange={handleChange}
                   required
-                  min="0"
-                  step="1"
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  placeholder="e.g., 250"
+                  placeholder="e.g., Grilled Chicken Breast"
                 />
               </div>
 
-              <div>
-                <label className="block text-gray-700 font-semibold mb-2">Quantity</label>
-                <input
-                  type="number"
-                  name="quantity"
-                  value={formData.quantity}
-                  onChange={handleChange}
-                  min="0"
-                  step="0.1"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  placeholder="e.g., 100 (grams)"
-                />
-              </div>
-            </div>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-gray-700 font-semibold mb-2">Approx Calories</label>
+                  <input
+                    type="number"
+                    name="calories"
+                    value={formData.calories}
+                    onChange={handleChange}
+                    required
+                    min="0"
+                    step="1"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    placeholder="e.g., 250"
+                  />
+                </div>
 
-            <div className="grid md:grid-cols-3 gap-4">
-              <div>
-                <label className="block text-gray-700 font-semibold mb-2">Protein (g)</label>
-                <input
-                  type="number"
-                  name="protein"
-                  value={formData.protein}
-                  onChange={handleChange}
-                  min="0"
-                  step="0.1"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  placeholder="0"
-                />
-              </div>
-
-              <div>
-                <label className="block text-gray-700 font-semibold mb-2">Carbohydrates (g)</label>
-                <input
-                  type="number"
-                  name="carbohydrates"
-                  value={formData.carbohydrates}
-                  onChange={handleChange}
-                  min="0"
-                  step="0.1"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  placeholder="0"
-                />
+                <div>
+                  <label className="block text-gray-700 font-semibold mb-2">Quantity</label>
+                  <input
+                    type="number"
+                    name="quantity"
+                    value={formData.quantity}
+                    onChange={handleChange}
+                    min="0"
+                    step="0.1"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    placeholder="e.g., 100 (grams)"
+                  />
+                </div>
               </div>
 
-              <div>
-                <label className="block text-gray-700 font-semibold mb-2">Fats (g)</label>
-                <input
-                  type="number"
-                  name="fats"
-                  value={formData.fats}
-                  onChange={handleChange}
-                  min="0"
-                  step="0.1"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  placeholder="0"
-                />
-              </div>
-            </div>
+              <div className="grid md:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-gray-700 font-semibold mb-2">Protein (g)</label>
+                  <input
+                    type="number"
+                    name="protein"
+                    value={formData.protein}
+                    onChange={handleChange}
+                    min="0"
+                    step="0.1"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    placeholder="0"
+                  />
+                </div>
 
-            <div className="flex gap-2">
-              <button
-                type="submit"
-                disabled={loading}
-                className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-200 disabled:opacity-50"
-              >
-                {loading ? 'Saving...' : editingMeal ? 'Update Meal' : 'Log Meal'}
-              </button>
-              {editingMeal && (
+                <div>
+                  <label className="block text-gray-700 font-semibold mb-2">Carbohydrates (g)</label>
+                  <input
+                    type="number"
+                    name="carbohydrates"
+                    value={formData.carbohydrates}
+                    onChange={handleChange}
+                    min="0"
+                    step="0.1"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    placeholder="0"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 font-semibold mb-2">Fats (g)</label>
+                  <input
+                    type="number"
+                    name="fats"
+                    value={formData.fats}
+                    onChange={handleChange}
+                    min="0"
+                    step="0.1"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    placeholder="0"
+                  />
+                </div>
+              </div>
+
+              <div className="flex gap-2">
                 <button
-                  type="button"
-                  onClick={handleCancelEdit}
-                  className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-4 rounded-lg transition duration-200"
+                  type="submit"
+                  disabled={loading}
+                  className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-200 disabled:opacity-50"
                 >
-                  Cancel
+                  {loading ? 'Saving...' : editingMeal ? 'Update Meal' : 'Log Meal'}
                 </button>
-              )}
-            </div>
+                {editingMeal && (
+                  <button
+                    type="button"
+                    onClick={handleCancelEdit}
+                    className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-4 rounded-lg transition duration-200"
+                  >
+                    Cancel
+                  </button>
+                )}
+              </div>
             </form>
           </div>
 

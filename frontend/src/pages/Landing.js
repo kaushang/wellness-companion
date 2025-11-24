@@ -9,18 +9,13 @@ const Landing = () => {
       <div className="max-w-6xl max-h-screen mx-auto ">
         {/* Logo and Header */}
         <div className="text-center mb-12">
-          {/* <img 
-            src="/logo2.png" 
-            alt="Wellness Companion Logo" 
-            className="mx-auto h-48 w-auto object-contain"
-          /> */}
           <h1 className="text-5xl font-bold text-gray-800 mb-4">
             Personal Wellness Companion
           </h1>
           <p className="text-xl text-gray-600 mb-6">
             Track your nutrition and fitness journey with ease. <br /> Build healthy habits one day at a time.
           </p>
-          
+
           {/* Action Buttons */}
           <div className="flex gap-4 justify-center mb-12">
             <button

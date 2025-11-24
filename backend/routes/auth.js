@@ -3,10 +3,35 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
 
+const multer = require('multer');
+const path = require('path');
+
+// Configure multer for file upload
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Not an image! Please upload an image.'), false);
+    }
+  }
+});
+
 // Signup
-router.post('/signup', async (req, res) => {
+router.post('/signup', upload.single('profilePhoto'), async (req, res) => {
   try {
-    const { fullName, email, password, age, gender, currentBodyWeight, height, fitnessFrequencyPerWeek } = req.body;
+    const { fullName, email, password, age, gender, currentBodyWeight, height, fitnessFrequencyPerWeek, weightUnit, heightUnit } = req.body;
 
     // Validation
     if (!fullName || !email || !password || !age || !gender || !currentBodyWeight || !height || !fitnessFrequencyPerWeek) {
@@ -28,7 +53,10 @@ router.post('/signup', async (req, res) => {
       gender,
       currentBodyWeight,
       height,
-      fitnessFrequencyPerWeek
+      fitnessFrequencyPerWeek,
+      weightUnit: weightUnit || 'kg',
+      heightUnit: heightUnit || 'cm',
+      profilePhoto: req.file ? req.file.path.replace(/\\/g, '/') : ''
     });
 
     await user.save();
@@ -51,7 +79,10 @@ router.post('/signup', async (req, res) => {
         gender: user.gender,
         currentBodyWeight: user.currentBodyWeight,
         height: user.height,
-        fitnessFrequencyPerWeek: user.fitnessFrequencyPerWeek
+        fitnessFrequencyPerWeek: user.fitnessFrequencyPerWeek,
+        weightUnit: user.weightUnit,
+        heightUnit: user.heightUnit,
+        profilePhoto: user.profilePhoto
       }
     });
   } catch (error) {
@@ -99,7 +130,10 @@ router.post('/login', async (req, res) => {
         gender: user.gender,
         currentBodyWeight: user.currentBodyWeight,
         height: user.height,
-        fitnessFrequencyPerWeek: user.fitnessFrequencyPerWeek
+        fitnessFrequencyPerWeek: user.fitnessFrequencyPerWeek,
+        weightUnit: user.weightUnit,
+        heightUnit: user.heightUnit,
+        profilePhoto: user.profilePhoto
       }
     });
   } catch (error) {

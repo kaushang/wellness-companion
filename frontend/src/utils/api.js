@@ -26,6 +26,8 @@ export const fitnessAPI = {
 export const profileAPI = {
   getProfile: () => axios.get(`${API_URL}/profile`),
   updateProfile: (data) => axios.put(`${API_URL}/profile`, data),
+  deleteProfilePhoto: () => axios.delete(`${API_URL}/profile/photo`),
+  deleteAccount: () => axios.delete(`${API_URL}/profile`),
 };
 
 export const chatAPI = {

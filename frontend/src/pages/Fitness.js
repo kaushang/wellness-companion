@@ -39,9 +39,9 @@ const Fitness = () => {
 
   const buildDerived = (list) => {
     const startOfToday = new Date();
-    startOfToday.setHours(0,0,0,0);
+    startOfToday.setHours(0, 0, 0, 0);
     const endOfToday = new Date();
-    endOfToday.setHours(23,59,59,999);
+    endOfToday.setHours(23, 59, 59, 999);
     const todays = list.filter(w => {
       const d = new Date(w.timestamp);
       return d >= startOfToday && d <= endOfToday;
@@ -55,7 +55,7 @@ const Fitness = () => {
       if (!byDate[key]) byDate[key] = { date: new Date(d.getFullYear(), d.getMonth(), d.getDate()), workouts: [] };
       byDate[key].workouts.push(w);
     });
-    const groups = Object.values(byDate).sort((a,b) => b.date - a.date);
+    const groups = Object.values(byDate).sort((a, b) => b.date - a.date);
     setLast7DaysGroups(groups);
     setDaysExercisedCount(groups.length);
   };
@@ -93,7 +93,7 @@ const Fitness = () => {
       } else {
         await fitnessAPI.logWorkout(workoutData);
       }
-      
+
       setFormData({ workoutType: '', duration: '', sets: '', reps: '' });
       fetchWeekWorkouts();
     } catch (err) {
@@ -134,8 +134,8 @@ const Fitness = () => {
 
   const formatTime = (timestamp) => {
     const date = new Date(timestamp);
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + 
-           ' at ' + date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) +
+      ' at ' + date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
   };
 
   return (
@@ -145,16 +145,17 @@ const Fitness = () => {
         <div className="mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <button
-              onClick={() => navigate('/home')}
-              className="bg-indigo-600 text-white px-4 py-2 rounded-lg transition duration-200"
+              onClick={() => navigate("/home")}
+              className="text-indigo-600 hover:text-indigo-800 font-semibold transition-colors flex items-center gap-2"
             >
-              ← Back
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+              Back to Home
             </button>
           </div>
-            <h1 className="text-2xl font-bold text-gray-800">Fitness</h1>
+          <h1 className="text-2xl font-bold text-gray-800">Fitness</h1>
           <button
             onClick={() => setShowLogout(true)}
-            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition duration-200"
+            className="bg-white text-red-500 border border-red-200 hover:bg-red-50 px-4 py-2 rounded-xl transition duration-200 font-medium shadow-sm"
           >
             Logout
           </button>
@@ -178,11 +179,11 @@ const Fitness = () => {
             <p className="text-gray-600 mb-2">Days Exercised This Week</p>
             <p className="text-5xl font-bold text-blue-600">{daysExercisedCount}</p>
             <p className="text-gray-600 mt-4">
-              {daysExercisedCount === 0 
-                ? "Let's get started! Log your first workout." 
+              {daysExercisedCount === 0
+                ? "Let's get started! Log your first workout."
                 : daysExercisedCount === 1
-                ? "Great start! Keep up the momentum."
-                : `You exercised on ${daysExercisedCount} days this week.`}
+                  ? "Great start! Keep up the momentum."
+                  : `You exercised on ${daysExercisedCount} days this week.`}
             </p>
           </div>
         </div>
@@ -190,93 +191,93 @@ const Fitness = () => {
         <div className="grid md:grid-cols-2 gap-6">
           {/* Log Workout Form */}
           <div className="bg-white rounded-lg shadow-lg p-6 mb-12 md:mb-0">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">
-            {editingWorkout ? 'Edit Workout' : 'Log a Workout'}
-          </h2>
-          
-          {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-              {error}
-            </div>
-          )}
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+              {editingWorkout ? 'Edit Workout' : 'Log a Workout'}
+            </h2>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-gray-700 font-semibold mb-2">Exercise</label>
-              <input
-                type="text"
-                name="workoutType"
-                value={formData.workoutType}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                placeholder="e.g., Pushups, Running, Cycling"
-              />
-            </div>
+            {error && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                {error}
+              </div>
+            )}
 
-            <div className="grid md:grid-cols-3 gap-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-gray-700 font-semibold mb-2">Duration (minutes)</label>
+                <label className="block text-gray-700 font-semibold mb-2">Exercise</label>
                 <input
-                  type="number"
-                  name="duration"
-                  value={formData.duration}
+                  type="text"
+                  name="workoutType"
+                  value={formData.workoutType}
                   onChange={handleChange}
-                  min="0"
-                  step="1"
+                  required
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  placeholder="e.g., 30"
+                  placeholder="e.g., Pushups, Running, Cycling"
                 />
               </div>
 
-              <div>
-                <label className="block text-gray-700 font-semibold mb-2">Sets</label>
-                <input
-                  type="number"
-                  name="sets"
-                  value={formData.sets}
-                  onChange={handleChange}
-                  min="0"
-                  step="1"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  placeholder="e.g., 3"
-                />
+              <div className="grid md:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-gray-700 font-semibold mb-2">Duration (minutes)</label>
+                  <input
+                    type="number"
+                    name="duration"
+                    value={formData.duration}
+                    onChange={handleChange}
+                    min="0"
+                    step="1"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    placeholder="e.g., 30"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 font-semibold mb-2">Sets</label>
+                  <input
+                    type="number"
+                    name="sets"
+                    value={formData.sets}
+                    onChange={handleChange}
+                    min="0"
+                    step="1"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    placeholder="e.g., 3"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 font-semibold mb-2">Reps</label>
+                  <input
+                    type="number"
+                    name="reps"
+                    value={formData.reps}
+                    onChange={handleChange}
+                    min="0"
+                    step="1"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    placeholder="e.g., 12"
+                  />
+                </div>
               </div>
 
-              <div>
-                <label className="block text-gray-700 font-semibold mb-2">Reps</label>
-                <input
-                  type="number"
-                  name="reps"
-                  value={formData.reps}
-                  onChange={handleChange}
-                  min="0"
-                  step="1"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  placeholder="e.g., 12"
-                />
-              </div>
-            </div>
 
-
-            <div className="flex gap-2">
-              <button
-                type="submit"
-                disabled={loading}
-                className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 mb-36 rounded-lg transition duration-200 disabled:opacity-50"
-              >
-                {loading ? 'Saving...' : editingWorkout ? 'Update Workout' : 'Log Workout'}
-              </button>
-              {editingWorkout && (
+              <div className="flex gap-2">
                 <button
-                  type="button"
-                  onClick={handleCancelEdit}
-                  className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-4 rounded-lg transition duration-200"
+                  type="submit"
+                  disabled={loading}
+                  className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 mb-36 rounded-lg transition duration-200 disabled:opacity-50"
                 >
-                  Cancel
+                  {loading ? 'Saving...' : editingWorkout ? 'Update Workout' : 'Log Workout'}
                 </button>
-              )}
-            </div>
+                {editingWorkout && (
+                  <button
+                    type="button"
+                    onClick={handleCancelEdit}
+                    className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-4 rounded-lg transition duration-200"
+                  >
+                    Cancel
+                  </button>
+                )}
+              </div>
             </form>
           </div>
 
@@ -286,7 +287,7 @@ const Fitness = () => {
             {todayWorkouts.length === 0 ? (
               <p className="text-gray-600 text-center py-8 h-full">No workouts logged today.</p>
             ) : (
-              <div className="space-y-3 max-h-96 overflow-y-auto scroll-panel pr-1"> 
+              <div className="space-y-3 max-h-96 overflow-y-auto scroll-panel pr-1">
                 {todayWorkouts.map((workout) => (
                   <div key={workout._id} className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition">
                     <div className="flex justify-between items-start">

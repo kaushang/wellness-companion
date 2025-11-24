@@ -45,7 +45,7 @@ const Home = () => {
             </button>
             <button
               onClick={() => setShowLogout(true)}
-              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition duration-200"
+              className="bg-white text-red-500 border border-red-200 hover:bg-red-50 px-4 py-2 rounded-xl transition duration-200 font-medium shadow-sm"
             >
               Logout
             </button>
@@ -82,11 +82,10 @@ const Home = () => {
               {messages.map((msg, index) => (
                 <div
                   key={index}
-                  className={`rounded-lg p-4 max-w-md ${
-                    msg.isUser
-                      ? 'bg-indigo-600 text-white ml-auto'
-                      : 'bg-gray-100 text-gray-700'
-                  }`}
+                  className={`rounded-lg p-4 max-w-md ${msg.isUser
+                    ? 'bg-indigo-600 text-white ml-auto'
+                    : 'bg-gray-100 text-gray-700'
+                    }`}
                 >
                   <p>{msg.text}</p>
                 </div>
@@ -164,7 +163,7 @@ const Home = () => {
               <div className="bg-green-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
                 <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 
+                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 
                         5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 
                         3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
@@ -183,7 +182,7 @@ const Home = () => {
               <div className="bg-blue-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
                 <svg className="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                        d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
               <h3 className="text-2xl font-bold text-gray-800 mb-2">Fitness</h3>
