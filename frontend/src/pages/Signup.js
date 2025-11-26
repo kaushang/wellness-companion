@@ -151,6 +151,19 @@ const Signup = () => {
                 </div>
               </div>
 
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 shadow-sm hover:shadow-md"
+                  placeholder="••••••••"
+                />
+              </div>
+
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Age</label>
@@ -231,34 +244,34 @@ const Signup = () => {
                     </div>
                   </div>
                 ) : (
-                  <div className="flex gap-2">
-                    <div className="relative flex-1 rounded-xl shadow-sm">
+                  <div className="flex rounded-xl shadow-sm border border-gray-200 focus-within:ring-1 focus-within:ring-indigo-500 focus-within:border-indigo-500 transition-all duration-200 bg-white">
+                    <div className="relative flex-1">
                       <input
                         type="text"
                         inputMode="numeric"
                         pattern="[0-9]*"
                         value={heightFeet}
                         onChange={(e) => setHeightFeet(e.target.value)}
-                        className="block w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200"
+                        className="block w-full px-4 py-3 border-0 rounded-l-xl focus:ring-0 focus:outline-none bg-transparent"
                         placeholder="Feet"
                       />
                     </div>
-                    <div className="relative flex-1 rounded-xl shadow-sm">
+                    <div className="relative flex-1 border-l border-gray-200">
                       <input
                         type="text"
                         inputMode="numeric"
                         pattern="[0-9]*"
                         value={heightInches}
                         onChange={(e) => setHeightInches(e.target.value)}
-                        className="block w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200"
+                        className="block w-full px-4 py-3 border-0 focus:ring-0 focus:outline-none bg-transparent"
                         placeholder="Inches"
                       />
                     </div>
-                    <div className="relative">
+                    <div className="relative border-l border-gray-200">
                       <UnitSelect
                         value={heightType}
                         onChange={(e) => setHeightType(e.target.value)}
-                        className="h-full py-0 pl-4 w-24 border border-gray-200 bg-white text-gray-700 font-medium rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm cursor-pointer hover:bg-gray-50 transition-colors"
+                        className="h-full py-0 pl-4 w-24 bg-transparent text-gray-700 font-medium rounded-r-xl focus:ring-0 focus:outline-none sm:text-sm cursor-pointer hover:bg-gray-50 transition-colors"
                       >
                         <option value="cm">CM</option>
                         <option value="ftin">FT/IN</option>
@@ -266,6 +279,18 @@ const Signup = () => {
                     </div>
                   </div>
                 )}
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                <input
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 shadow-sm hover:shadow-md"
+                  placeholder="••••••••"
+                />
               </div>
 
               <div>
@@ -287,31 +312,7 @@ const Signup = () => {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 shadow-sm hover:shadow-md"
-                placeholder="••••••••"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
-              <input
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 shadow-sm hover:shadow-md"
-                placeholder="••••••••"
-              />
-            </div>
-          </div>
+
 
           <button
             type="submit"

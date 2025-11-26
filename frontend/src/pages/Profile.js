@@ -370,9 +370,9 @@ const Profile = () => {
 
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Photo Upload with Name and Email */}
-            <div className="bg-indigo-50 rounded-2xl p-6 border border-indigo-100 shadow-sm flex items-center gap-6">
-              <div className="mb-2 relative group flex-shrink-0">
-                <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-md bg-white flex items-center justify-center transition-all duration-200 group-hover:border-indigo-200 group-hover:shadow-lg">
+            <div className="bg-indigo-50 rounded-2xl p-6 pb-8 border border-indigo-100 shadow-sm flex items-center gap-6">
+              <div className=" relative group flex-shrink-0">
+                <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-md bg-white flex items-center justify-center transition-all duration-200 group-hover:border-indigo-200 group-hover:shadow-lg">
                   {photoPreview ? (
                     <img src={photoPreview} alt="Profile" className="w-full h-full object-cover" />
                   ) : (
@@ -506,34 +506,34 @@ const Profile = () => {
                     </div>
                   </div>
                 ) : (
-                  <div className="flex gap-2">
-                    <div className="relative flex-1 rounded-xl shadow-sm">
+                  <div className="flex rounded-xl shadow-sm border border-gray-200 focus-within:ring-1 focus-within:ring-indigo-500 focus-within:border-indigo-500 transition-all duration-200 bg-white">
+                    <div className="relative flex-1">
                       <input
                         type="text"
                         inputMode="numeric"
                         pattern="[0-9]*"
                         value={heightFeet}
                         onChange={(e) => setHeightFeet(e.target.value)}
-                        className="block w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus-within:ring-1 focus-within:ring-indigo-500 focus-within:border-indigo-500 transition-all duration-200"
+                        className="block w-full px-4 py-3 border-0 rounded-l-xl focus:ring-0 focus:outline-none bg-transparent"
                         placeholder="Feet"
                       />
                     </div>
-                    <div className="relative flex-1 rounded-xl shadow-sm">
+                    <div className="relative flex-1 border-l border-gray-200">
                       <input
                         type="text"
                         inputMode="numeric"
                         pattern="[0-9]*"
                         value={heightInches}
                         onChange={(e) => setHeightInches(e.target.value)}
-                        className="block w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus-within:ring-1 focus-within:ring-indigo-500 focus-within:border-indigo-500 transition-all duration-200"
+                        className="block w-full px-4 py-3 border-0 focus:ring-0 focus:outline-none bg-transparent"
                         placeholder="Inches"
                       />
                     </div>
-                    <div className="relative">
+                    <div className="relative border-l border-gray-200">
                       <UnitSelect
                         value={heightType}
                         onChange={(e) => handleHeightTypeChange(e.target.value)}
-                        className="h-full py-0 pl-4 w-24 border border-gray-200 bg-white text-gray-700 font-medium rounded-xl focus:outline-none focus-within:ring-1 focus-within:ring-indigo-500 focus-within:border-indigo-500 sm:text-sm cursor-pointer hover:bg-gray-50 transition-colors"
+                        className="h-full py-0 pl-4 w-24 bg-transparent text-gray-700 font-medium rounded-r-xl focus:ring-0 focus:outline-none sm:text-sm cursor-pointer hover:bg-gray-50 transition-colors"
                       >
                         <option value="cm">CM</option>
                         <option value="ftin">FT/IN</option>
