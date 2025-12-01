@@ -96,7 +96,10 @@ const MentalHealth = () => {
                                     setLoading(true);
 
                                     try {
-                                        const response = await chatAPI.sendMessage({ message: userMessage });
+                                        const response = await chatAPI.sendMessage({
+                                            message: userMessage,
+                                            context: 'mental-health'
+                                        });
 
                                         // Add AI response
                                         setMessages(prev => [

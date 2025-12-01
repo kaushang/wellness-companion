@@ -107,7 +107,10 @@ const Home = () => {
                   setLoading(true);
 
                   try {
-                    const response = await chatAPI.sendMessage({ message: userMessage });
+                    const response = await chatAPI.sendMessage({
+                      message: userMessage,
+                      context: 'general'
+                    });
 
                     // Add AI response
                     setMessages(prev => [
