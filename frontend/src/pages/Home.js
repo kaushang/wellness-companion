@@ -70,11 +70,10 @@ const Home = () => {
           <h2 className="text-3xl font-bold text-gray-800 mb-2">
             Welcome back, {user?.fullName}!
           </h2>
-          <p className="text-gray-600">How can we help you today?</p>
         </div>
 
         {/* Chat Interface Area */}
-        <div className="bg-white rounded-lg shadow-lg mb-6" style={{ height: '400px' }}>
+        <div className="bg-white rounded-lg shadow-lg mb-6 h-[calc(100vh-280px)] min-h-[600px]">
           <div className="h-full flex flex-col">
 
             {/* Messages */}
@@ -153,7 +152,7 @@ const Home = () => {
         </div>
 
         {/* Navigation Cards */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-3 gap-6">
           <div
             onClick={() => navigate('/nutrition')}
             className="bg-white rounded-lg shadow-lg p-8 cursor-pointer 
@@ -187,6 +186,23 @@ const Home = () => {
               </div>
               <h3 className="text-2xl font-bold text-gray-800 mb-2">Fitness</h3>
               <p className="text-gray-600">Log your workouts and track your fitness progress</p>
+            </div>
+          </div>
+
+          <div
+            onClick={() => navigate('/mental-health')}
+            className="bg-white rounded-lg shadow-lg p-8 cursor-pointer 
+            hover:shadow-xl transition duration-200 transform hover:scale-105"
+          >
+            <div className="text-center">
+              <div className="bg-purple-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+                <svg className="w-10 h-10 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-2">Mental Health</h3>
+              <p className="text-gray-600">Chat with your AI companion for mental wellness support</p>
             </div>
           </div>
         </div>

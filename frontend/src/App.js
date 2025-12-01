@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import Nutrition from './pages/Nutrition';
 import Fitness from './pages/Fitness';
 import Profile from './pages/Profile';
+import MentalHealth from './pages/MentalHealth';
 
 function App() {
   return (
@@ -48,6 +49,14 @@ function App() {
             element={
               <PrivateRoute>
                 <Profile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/mental-health"
+            element={
+              <PrivateRoute>
+                <MentalHealth />
               </PrivateRoute>
             }
           />
